@@ -70,6 +70,12 @@ app.get('/products2', (req, res) => {
 
 })
 
+app.delete('/user', (req, res) => {
+  const id = req.query.id
+  console.log('delete /user id=', id)
+  res.send({id})
+})
+
 
 app.listen(4000, () => {
   console.log('server app start on port 4000')
