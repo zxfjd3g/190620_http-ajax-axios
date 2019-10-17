@@ -8,35 +8,7 @@ app.use(cors())
 // 能解析urlencode格式的post请求体参数
 app.use(express.urlencoded())
 // 能解析json格式的请求体参数
-// app.use(express.json())
-
-
-app.get('/get1', (req, res) => {
-  const {id} = req.query
-  res.send({
-    id,
-    title: 'axios very good',
-    author: '张三'
-  })
-})
-
-app.get('/get2', (req, res) => {
-  const {id} = req.query
-  res.send({
-    id,
-    name: 'xxx',
-    price: 12
-  })
-})
-
-app.post('/post1', (req, res) => {
-  const {id} = req.body
-  res.send({
-    id,
-    name: 'yyy',
-    price: 23
-  })
-})
+app.use(express.json())
 
 app.get('/products1', (req, res) => {
   
@@ -69,13 +41,6 @@ app.get('/products2', (req, res) => {
   }, 1000 + Math.random() * 2000);
 
 })
-
-app.delete('/user', (req, res) => {
-  const id = req.query.id
-  console.log('delete /user id=', id)
-  res.send({id})
-})
-
 
 app.listen(4000, () => {
   console.log('server app start on port 4000')
