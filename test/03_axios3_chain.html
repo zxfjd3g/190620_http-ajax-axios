@@ -10,6 +10,22 @@
   
   <script src="https://cdn.bootcss.com/axios/0.19.0/axios.js"></script>
   <script>
+    /* 
+    requestInterceptors: [{fulfilled1(){}, rejected1(){}}, {fulfilled2(){}, rejected2(){}}]
+    responseInterceptors: [{fulfilled11(){}, rejected11(){}}, {fulfilled22(){}, rejected22(){}}]
+    chain: [
+      fulfilled2, rejected2, fulfilled1, rejected1, 
+      dispatchReqeust, undefined, 
+      fulfilled11, rejected11, fulfilled22, rejected22
+    
+    ]
+    promise链回调: config 
+                  => (fulfilled2, rejected2) => (fulfilled1, rejected1)   // 请求拦截器处理
+                  => (dispatchReqeust, undefined) // 发请求
+                  => (fulfilled11, rejected11) => (fulfilled22, rejected22) // 响应拦截器处理
+                  => (onResolved, onRejected) // axios发请求回调处理
+    */
+
     // 添加请求拦截器(回调函数)
     axios.interceptors.request.use(
       config => {

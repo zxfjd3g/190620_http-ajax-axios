@@ -15,6 +15,11 @@
   <script>
     let cancel  // 用于保存取消请求的函数
     function getProducts1() {
+      // 在准备发请求前, 取消未完成的请求
+      if (typeof cancel==='function') {
+        cancel('取消请求')
+      }
+
       axios({
         url: 'http://localhost:4000/products1',
         cancelToken: new axios.CancelToken((c) => { // c是用于取消当前请求的函数
@@ -27,22 +32,44 @@
           console.log('请求1成功了', response.data)
         },
         error => {
-          cancel = null
-          console.log('请求1失败了', error.message, error)
+
+          if (axios.isCancel(error)) {
+            // cancel = null
+            console.log('请求1取消的错误', error.message)
+          } else { // 请求出错了
+            cancel = null
+            console.log('请求1失败了', error.message)
+          }
+          
         }
       )
     }
 
     function getProducts2() {
+      // 在准备发请求前, 取消未完成的请求
+      if (typeof cancel==='function') {
+        cancel('取消请求')
+      }
+
       axios({
-        url: 'http://localhost:4000/products2'
+        url: 'http://localhost:4000/products2',
+        cancelToken: new axios.CancelToken((c) => { // c是用于取消当前请求的函数
+          // 保存取消函数, 用于之后可能需要取消当前请求
+          cancel = c
+        })
       }).then(
         response => {
+          cancel = null
           console.log('请求2成功了', response.data)
         },
         error => {
-          cancel = null
-          console.log('请求2失败了', error.message)
+          if (axios.isCancel(error)) {
+            // cancel = null
+            console.log('请求2取消的错误', error.message)
+          } else { // 请求出错了
+            cancel = null
+            console.log('请求2失败了', error.message)
+          }
         }
       )
     }
