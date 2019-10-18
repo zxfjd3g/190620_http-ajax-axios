@@ -101,7 +101,8 @@
         axios有Axios原型上的所有发特定类型请求的方法: get()/post()/put()/delete()
         axios有Axios的实例上的所有属性: defaults/interceptors
         后面又添加了create()/CancelToken()/all()
-    2. axios.create()返回的对象与axios的区别
+    
+	2. axios.create()返回的对象与axios的区别
         1). 相同: 
             都是一个能发任意请求的函数: request(config)
             都有发特定请求的各种方法: get()/post()/put()/delete()
@@ -109,22 +110,28 @@
         2). 不同:
             默认匹配的值不一样
             instance没有axios后面添加的一引起方法: create()/CancelToken()/all()
+
     3. axios发请求的流程
         1). 整体流程: request(config)  ===> dispatchRequest(config) ===> xhrAdapter(config)
         2). request(config): 将请求拦截器 / dispatchRequest() / 响应拦截器 通过promise链串连起来, 返回promise
         3). dispatchRequest(config): 转换请求数据 ===> 调用xhrAdapter()发请求 ===> 请求返回后转换响应数据. 返回promise
         4). xhrAdapter(config): 创建XHR对象, 根据config进行相应设置, 发送特定请求, 并接收响应数据, 返回promise 
+![](http://vipkshttp1.wiz.cn/ks/share/resources/49c30824-dcdf-4bd0-af2a-708f490b44a1/584701e2-1d9b-4523-b9b2-0f33e838dd7f/index_files/e5692e36861bd1d2fa1735c5ab801af7.png)
+
     4. axios的请求/响应拦截器是什么?
         1). 请求拦截器: 在真正发请求前, 可以对请求进行检查或配置进行特定处理的函数, 
                    包括成功/失败的函数, 传递的必须是config
         2). 响应拦截器: 在请求返回后, 可以对响应数据进行特定处理的函数,
                    包括成功/失败的函数, 传递的默认是response
+![](http://vipkshttp1.wiz.cn/ks/share/resources/49c30824-dcdf-4bd0-af2a-708f490b44a1/584701e2-1d9b-4523-b9b2-0f33e838dd7f/index_files/b0f95169782409e7576bc9704b93b693.png)
+
     5. axios的请求/响应数据转换器是什么?
         1). 请求转换器: 对请求头和请求体数据进行特定处理的函数
             setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
             return JSON.stringify(data)
         2). 响应转换器: 将响应体json字符串解析为js对象或数组的函数
             response.data = JSON.parse(response.data)
+
     6. response的整体结构
         {
             data,
@@ -134,12 +141,14 @@
             config,
             request
         }
+
     7. error的整体结构
         {
             message,
             request,
             response
         }
+
     8. 如何取消未完成的请求
         1).当配置了cancelToken对象时, 保存cancel函数
             创建一个用于将来中断请求的cancelPromise
