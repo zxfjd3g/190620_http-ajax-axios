@@ -76,6 +76,14 @@
     }
 
 ### 12). 如何取消已经发送的请求?
+    1.当配置了cancelToken对象时, 保存cancel函数
+        创建一个用于将来中断请求的cancelPromise
+        并定义了一个用于取消请求的cancel函数
+        将cancel函数传递出来
+    2.调用cancel()取消请求
+        执行cacel函数, 传入错误信息message
+        内部会让cancelPromise变为成功, 且成功的值为一个Cancel对象
+        在cancelPromise的成功回调中中断请求, 并让发请求的proimse失败, 失败的reason为Cacel对象
 
 
 
